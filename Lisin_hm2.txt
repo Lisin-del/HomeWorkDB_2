@@ -1,0 +1,108 @@
+SELECT * FROM s;
+  ks  |   sfn   |     sln      | kt | gender |  h  |  salary
+------+---------+--------------+----+--------+-----+----------
+ 1002 | Ian     | Holm         |  2 | m      | 169 |  1200.00
+ 1003 | Milla   | Jovovich     |  2 | f      | 176 |  2100.00
+ 1004 | Chris   | Tucker       |  2 | m      | 190 |   900.00
+ 1005 | Luke    | Perry        |  3 | m      | 167 |   950.00
+ 1006 | Brion   | James        |  3 | m      | 200 |  1100.00
+ 1007 | Lee     | Evans        |  3 | m      | 178 |   500.00
+ 1009 | Donald  | Trump        |  3 | m      | 188 |   200.00
+ 1001 | Gary    | Oldman       |  1 | m      | 167 |  2500.00
+ 1000 | Bruce   | Willis       |  2 | m      | 183 |  3000.00
+ 1008 | Dmitrii | Nagiev       |  2 | m      | 160 |   490.00
+ 1101 | Joseph  | Biden        |  1 | m      | 170 | 13556.00
+ 1105 | Dmitrii | Shaposhnikov |  1 | m      | 175 | 13645.67
+ 1100 | Grette  | Tundberg     |  1 | f      | 149 | 12345.67
+
+
+Netcracker=# SELECT sfn, sln, kt, gender, h, salary, COUNT(*)
+Netcracker-# FROM s GROUP BY sfn, sln, kt, gender, h, salary HAVING COUNT(*) > 1;
+ sfn | sln | kt | gender | h | salary | count
+-----+-----+----+--------+---+--------+-------
+(0 ёЄЁюъ)
+
+
+Netcracker=# INSERT INTO s (ks, sfn, sln, kt, gender, h, salary)
+Netcracker-# VALUES (10106, 'Dmitrii', 'Shaposhnikov', 1, 'm', 175, 13645.67);
+INSERT 0 1
+
+
+Netcracker=# SELECT sfn, sln, kt, gender, h, salary, COUNT(*)
+Netcracker-# FROM s GROUP BY sfn, sln, kt, gender, h, salary HAVING COUNT(*) > 1;
+   sfn   |     sln      | kt | gender |  h  |  salary  | count
+---------+--------------+----+--------+-----+----------+-------
+ Dmitrii | Shaposhnikov |  1 | m      | 175 | 13645.67 |     2
+(1 ёЄЁюър)
+
+
+Netcracker=# INSERT INTO s (ks, sfn, sln, kt, gender, h, salary)
+Netcracker-# VALUES (1121, 'Milla', 'Jovovich', 2, 'f', 176, 2100.00);
+INSERT 0 1
+Netcracker=# SELECT * FROM s;
+  ks   |   sfn   |     sln      | kt | gender |  h  |  salary
+-------+---------+--------------+----+--------+-----+----------
+  1002 | Ian     | Holm         |  2 | m      | 169 |  1200.00
+  1003 | Milla   | Jovovich     |  2 | f      | 176 |  2100.00
+  1004 | Chris   | Tucker       |  2 | m      | 190 |   900.00
+  1005 | Luke    | Perry        |  3 | m      | 167 |   950.00
+  1006 | Brion   | James        |  3 | m      | 200 |  1100.00
+  1007 | Lee     | Evans        |  3 | m      | 178 |   500.00
+  1009 | Donald  | Trump        |  3 | m      | 188 |   200.00
+  1001 | Gary    | Oldman       |  1 | m      | 167 |  2500.00
+  1000 | Bruce   | Willis       |  2 | m      | 183 |  3000.00
+  1008 | Dmitrii | Nagiev       |  2 | m      | 160 |   490.00
+  1101 | Joseph  | Biden        |  1 | m      | 170 | 13556.00
+  1105 | Dmitrii | Shaposhnikov |  1 | m      | 175 | 13645.67
+  1100 | Grette  | Tundberg     |  1 | f      | 149 | 12345.67
+ 10106 | Dmitrii | Shaposhnikov |  1 | m      | 175 | 13645.67
+  1121 | Milla   | Jovovich     |  2 | f      | 176 |  2100.00
+(15 ёЄЁюъ)
+
+
+Netcracker=# SELECT sfn, sln, kt, gender, h, salary, COUNT(*)
+Netcracker-# FROM s GROUP BY sfn, sln, kt, gender, h, salary HAVING COUNT(*) > 1;
+   sfn   |     sln      | kt | gender |  h  |  salary  | count
+---------+--------------+----+--------+-----+----------+-------
+ Milla   | Jovovich     |  2 | f      | 176 |  2100.00 |     2
+ Dmitrii | Shaposhnikov |  1 | m      | 175 | 13645.67 |     2
+(2 ёЄЁюъш)
+
+===============================================================
+
+Netcracker=# SELECT * FROM f;
+ idcall |  ks  |             dt             | dur
+--------+------+----------------------------+-----
+ 120001 | 1000 | 2018-01-08 10:00:00+03     |  10
+ 120002 | 1000 | 2018-01-08 12:00:00+03     |  20
+ 120003 | 1000 | 2018-01-08 14:00:00+03     |   1
+ 120004 | 1000 | 2018-01-09 10:00:00+03     |  40
+ 120005 | 1000 | 2018-01-10 10:00:00+03     |  50
+ 120006 | 1001 | 2018-01-01 10:00:00+03     |  20
+ 120007 | 1001 | 2018-01-02 10:10:00+03     |  30
+ 120008 | 1001 | 2018-01-03 10:00:00+03     |   2
+ 120009 | 1001 | 2018-01-04 10:00:00+03     |   5
+ 120010 | 1002 | 2018-01-07 10:00:00+03     |  10
+ 120011 | 1003 | 2018-01-03 10:00:00+03     |  10
+ 120012 | 1003 | 2018-01-04 10:00:00+03     |  11
+ 120013 | 1003 | 2018-01-05 10:00:00+03     |  15
+ 120014 | 1004 | 2018-01-02 10:00:00+03     |  20
+ 120015 | 1005 | 2018-01-08 11:00:00+03     |   3
+ 120016 | 1006 | 2018-01-05 10:00:00+03     |  10
+ 120017 | 1006 | 2018-01-06 10:00:00+03     |  10
+ 120018 | 1007 | 2019-07-15 07:30:26.928+03 |  21
+ 120022 | 1000 | 2021-03-22 18:30:30.218+03 |  13
+ 120023 | 1004 | 2021-01-01 10:00:00+03     |   2
+ 120024 | 1004 | 2021-01-01 13:00:00+03     |  33
+(21 ёЄЁюър)
+
+
+Netcracker=# SELECT idcall, ks, dt, dur FROM f WHERE
+Netcracker-# dur > 30 AND
+Netcracker-# (idcall - 1) IN (SELECT idcall FROM f WHERE dur < 3) AND
+Netcracker-# ks IN (SELECT ks FROM f WHERE dur < 3);
+ idcall |  ks  |           dt           | dur
+--------+------+------------------------+-----
+ 120004 | 1000 | 2018-01-09 10:00:00+03 |  40
+ 120024 | 1004 | 2021-01-01 13:00:00+03 |  33
+(2 ёЄЁюъш)
